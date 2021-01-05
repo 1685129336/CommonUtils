@@ -1,0 +1,6 @@
+include ':net'
+include ':common'
+include ':XmppLibrary'
+include ':CommonLibrary'
+include ':app'
+rootProject.name = "CommonUtils"
