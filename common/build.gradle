@@ -3,7 +3,8 @@
     apply plugin:'kotlin-android'
     apply plugin:'kotlin-android-extensions'
     apply plugin:'kotlin-kapt'
-
+    apply plugin: 'com.github.dcendents.android-maven'
+    group='com.github.1685129336'
 def libs = rootProject.ext.dependencies
 def appInfo = rootProject.ext.android
 android {
