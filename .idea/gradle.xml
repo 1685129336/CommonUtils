@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/media" />
+            <option value="$PROJECT_DIR$/mvvmcore" />
             <option value="$PROJECT_DIR$/net" />
           </set>
         </option>
