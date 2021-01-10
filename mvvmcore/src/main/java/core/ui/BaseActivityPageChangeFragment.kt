@@ -57,6 +57,10 @@ abstract class BaseActivityPageChangeFragment : BaseActivity() {
         return -1
     }
 
+    fun startFragment(fragment: Class<*>, data: Bundle?){
+        startFragment(fragment, data,nextPageInAnimation,nextPageOutAnimation)
+    }
+
     //切换fragment
     fun startFragment(fragment: Class<*>, data: Bundle?,animIn:Int,animOut:Int){
         val queryFragment = queryFragment(fragment, fragments)
@@ -65,6 +69,9 @@ abstract class BaseActivityPageChangeFragment : BaseActivity() {
         f.send(data)
     }
 
+    fun callbackFragment(): Boolean {
+        return callbackFragment(lastPageInAnimation,lastPageOutAnimation)
+    }
     //提供外部调用
     fun callbackFragment(animIn: Int,animOut: Int): Boolean {
         if (pageStack.size > 1) {
@@ -86,16 +93,4 @@ abstract class BaseActivityPageChangeFragment : BaseActivity() {
 
     abstract fun frameLayoutId(): Int
 
-    fun FragmentPassByValue.startFragment(activity:BaseActivityPageChangeFragment,fragment: Class<*>, data: Bundle?){
-        activity.startFragment(fragment, data,nextPageInAnimation,nextPageOutAnimation)
-    }
-    fun FragmentPassByValue.startFragment(activity:BaseActivityPageChangeFragment,fragment: Class<*>, data: Bundle?,animIn:Int,animOut:Int){
-        activity.startFragment(fragment, data,animIn, animOut)
-    }
-    fun FragmentPassByValue.callbackFragment(activity:BaseActivityPageChangeFragment):Boolean{
-       return activity.callbackFragment(lastPageInAnimation,lastPageOutAnimation)
-    }
-    fun FragmentPassByValue.callbackFragment(activity:BaseActivityPageChangeFragment,animIn: Int,animOut: Int):Boolean{
-        return activity.callbackFragment(animIn, animOut)
-    }
 }
