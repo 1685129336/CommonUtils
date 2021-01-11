@@ -12,14 +12,14 @@ class SPUtil<T>(val context: Context, val name: String, val defaultValue: T) :
     private val sp by lazy { context.getSharedPreferences("1804a", Context.MODE_PRIVATE) }
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
-        return findPreference(name,defaultValue)
+        return findPreference()
     }
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
-        inputPreference(name,value)
+        inputPreference(value)
     }
 
-     fun <T> findPreference(name: String, defaultValue: T): T {
+     fun  findPreference(): T {
         var result : Any
         result = when(defaultValue){
             is Long -> sp.getLong(name,defaultValue)
@@ -33,7 +33,7 @@ class SPUtil<T>(val context: Context, val name: String, val defaultValue: T) :
         }
         return result as T
     }
-     fun <T> inputPreference(name: String,value:T){
+     fun inputPreference(value:T){
         with(sp.edit()){
             when(value){
                 is Long -> putLong(name,value)
