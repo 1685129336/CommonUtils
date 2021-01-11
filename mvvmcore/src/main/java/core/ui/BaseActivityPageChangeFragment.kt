@@ -8,24 +8,26 @@ import core.api.FragmentPassByValue
 abstract class BaseActivityPageChangeFragment : BaseActivity() {
     var fragments = mutableListOf<Fragment>()
     var pageStack = mutableListOf<Fragment>()
+
     //下一页进入场动画
-     var nextPageInAnimation:Int = 0
-     var nextPageOutAnimation:Int = 0
+    var nextPageInAnimation: Int = 0
+    var nextPageOutAnimation: Int = 0
+
     //上一页进入场动画
-     var lastPageInAnimation:Int = 0
-     var lastPageOutAnimation:Int = 0
-    private var count:Int = 0
+    var lastPageInAnimation: Int = 0
+    var lastPageOutAnimation: Int = 0
+    private var count: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    fun registerFragment(fragment: Fragment):Int {
+    fun registerFragment(fragment: Fragment): Int {
         fragments.add(fragment)
         return count++
     }
 
     //页面切换
-    protected fun pageChange(pos: Int, fs: MutableList<Fragment>, flag: Boolean,n1:Int,n2:Int,o1:Int,o2:Int) {
+    protected fun pageChange(pos: Int, fs: MutableList<Fragment>, flag: Boolean, n1: Int, n2: Int, o1: Int, o2: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         if (flag) {
             transaction.setCustomAnimations(n1, n2)
@@ -57,35 +59,38 @@ abstract class BaseActivityPageChangeFragment : BaseActivity() {
         return -1
     }
 
-    fun startFragment(fragment: Class<*>, data: Bundle?){
-        startFragment(fragment, data,nextPageInAnimation,nextPageOutAnimation)
+    fun startFragment(fragment: Class<*>, data: Bundle?) {
+        startFragment(fragment, data, nextPageInAnimation, nextPageOutAnimation)
     }
 
     //切换fragment
-    fun startFragment(fragment: Class<*>, data: Bundle?,animIn:Int,animOut:Int){
+    fun startFragment(fragment: Class<*>, data: Bundle?, animIn: Int, animOut: Int) {
         val queryFragment = queryFragment(fragment, fragments)
         val f = fragments.get(queryFragment) as FragmentPassByValue
-        pageChange(queryFragment, fragments, true,animIn,animOut,lastPageInAnimation,lastPageOutAnimation)
+        pageChange(queryFragment, fragments, true, animIn, animOut, lastPageInAnimation, lastPageOutAnimation)
         f.send(data)
     }
 
     fun callbackFragment(): Boolean {
-        return callbackFragment(lastPageInAnimation,lastPageOutAnimation)
+        return callbackFragment(lastPageInAnimation, lastPageOutAnimation)
     }
+
     //提供外部调用
-    fun callbackFragment(animIn: Int,animOut: Int): Boolean {
+    fun callbackFragment(animIn: Int, animOut: Int): Boolean {
         if (pageStack.size > 1) {
             val removeAt = pageStack.removeAt(pageStack.size - 1)
             val queryFragment =
                     queryFragment(pageStack.get(pageStack.size - 1).javaClass, fragments)
-            pageChange(queryFragment, fragments, false,nextPageInAnimation,nextPageOutAnimation,animIn,animOut)
+            pageChange(queryFragment, fragments, false, nextPageInAnimation, nextPageOutAnimation, animIn, animOut)
             return true
         }
         return false
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (!callbackFragment(lastPageInAnimation,lastPageOutAnimation)) {
+        if (!callbackFragment(lastPageInAnimation, lastPageOutAnimation) &&
+                event?.action == KeyEvent.ACTION_DOWN &&
+                keyCode == KeyEvent.KEYCODE_BACK) {
             finish()
         }
         return false
