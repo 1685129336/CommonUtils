@@ -88,10 +88,10 @@ abstract class BaseActivityPageChangeFragment : BaseActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (!callbackFragment(lastPageInAnimation, lastPageOutAnimation) &&
-                event?.action == KeyEvent.ACTION_DOWN &&
-                keyCode == KeyEvent.KEYCODE_BACK) {
-            finish()
+        if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!callbackFragment(lastPageInAnimation, lastPageOutAnimation)) {
+                finish()
+            }
         }
         return false
     }
