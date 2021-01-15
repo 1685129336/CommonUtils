@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<core.ui.BaseLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/base_layout"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#8BC34A"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这是用户页面"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+</core.ui.BaseLayout>
